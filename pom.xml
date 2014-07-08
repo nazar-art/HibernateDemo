@@ -78,18 +78,18 @@
             <artifactId>javassist</artifactId>
             <version>3.18.2-GA</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.31</version>
             <scope>runtime</scope>
-        </dependency>-->
-        <dependency>
+        </dependency>
+        <!--<dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.3-1101-jdbc41</version>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr</artifactId>

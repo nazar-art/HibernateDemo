@@ -6,16 +6,16 @@
 <hibernate-configuration>
     <session-factory>
         <!--Database connection settings-->
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/hibernatedb</property>
-        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/hibernatedb</property>
+        <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">secret</property>
 
         <!--JDBC connection pool-->
         <property name="hibernate.connection.pool_size">2</property>
 
         <!--SQL dialect-->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!--Disable the second level cache-->
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
@@ -24,8 +24,8 @@
         <property name="show_sql">true</property>
 
         <!--Drop and recreate the database schema on startup-->
-        <!--<property name="hbm2ddl.auto">create</property>-->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
+        <!--<property name="hbm2ddl.auto">update</property>-->
 
         <!-- List of XML mapping files -->
         <mapping class="com.demo.dto.UserDetails"/>
