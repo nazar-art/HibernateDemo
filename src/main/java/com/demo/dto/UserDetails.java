@@ -18,10 +18,10 @@ public class UserDetails {
     @Temporal(TemporalType.DATE)
     private Date joinedDate;
 
-    @Basic
+    @Column(length = 35)
     private String address;
 
-    @Basic
+    @Column(length = 35)
     private String description;
 
     public Date getJoinedDate() {

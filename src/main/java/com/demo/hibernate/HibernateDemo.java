@@ -2,39 +2,68 @@ package com.demo.hibernate;
 
 import com.demo.dto.UserDetails;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 
 import java.util.Date;
+import java.util.List;
 
 public class HibernateDemo {
     public static void main(String[] args) {
+        HibernateDemo demo = new HibernateDemo();
+
         UserDetails user = new UserDetails();
-//        user.setUserId(1);
         user.setUserName("Carl");
         user.setAddress("Monako");
         user.setJoinedDate(new Date());
         user.setDescription("it is cool guy");
 
-//        UserDetails userDetails = new UserDetails();
+        demo.createUser(user);
+        demo.listUsers();
+        user.setUserName("Bruno Shults");
+        user.setAddress("Germany");
+        demo.updateUser(user);
 
-        SessionFactory factory = new Configuration().configure().buildSessionFactory();
-        Session session = factory.openSession();
-        session.beginTransaction();
-        session.save(user);
-//        session.save(userDetails);
-        session.getTransaction().commit();
-        session.close();
+        demo.listUsers();
+    }
 
-        System.out.println("FINIS");
+    private UserDetails createUser(UserDetails userDetails) {
+        Session session = HibernateSessionFactory.currentSession();
+        Transaction tx = session.beginTransaction();
 
-        user = null;
-        session = factory.openSession();
-        session.beginTransaction();
-        user = (UserDetails) session.get(UserDetails.class, 1);
-        System.out.println("User name retrieved is " + user.getUserName());
-        session.close();
+        Integer id = (Integer) session.save(userDetails);
+        userDetails.setUserId(id);
 
-//        factory.close();
+        tx.commit();
+        HibernateSessionFactory.closeSession();
+        return userDetails;
+    }
+
+    private void updateUser(UserDetails userDetails) {
+        Session session = HibernateSessionFactory.currentSession();
+        Transaction tx = session.beginTransaction();
+
+        UserDetails dbUser = (UserDetails) session.get(UserDetails.class, userDetails.getUserId());
+        dbUser.setUserName(userDetails.getUserName());
+        dbUser.setAddress(userDetails.getAddress());
+        dbUser.setDescription(userDetails.getDescription());
+        dbUser.setJoinedDate(userDetails.getJoinedDate());
+
+        session.flush();
+        tx.commit();
+        HibernateSessionFactory.closeSession();
+    }
+
+    private void listUsers() {
+        Session session = HibernateSessionFactory.currentSession();
+        Transaction tx = session.beginTransaction();
+
+        @SuppressWarnings("unchecked") // from Users table we able to take only users
+        List<UserDetails> users = session.createQuery("from UserDetails").list();
+
+        for (UserDetails user : users) {
+            System.out.printf("ID: %d NAME: %s%n", user.getUserId(), user.getUserName());
+        }
+        tx.commit();
+        HibernateSessionFactory.closeSession();
     }
 }
