@@ -48,6 +48,10 @@ public class HibernateSessionFactory {
                     System.err.println("%%%% Error Creating SessionFactory %%%%");
                     e.printStackTrace();
                 }
+                /*finally {
+                    closeSession();
+                    System.exit(1);
+                }*/
             }
             session = sessionFactory.openSession();
             threadLocal.set(session);

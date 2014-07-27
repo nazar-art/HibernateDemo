@@ -32,6 +32,5 @@
         <mapping class="com.demo.dto.Vehicle"/>
         <mapping class="com.demo.dto.TwoWheeler"/>
         <mapping class="com.demo.dto.FourWheeler"/>
-
     </session-factory>
 </hibernate-configuration>

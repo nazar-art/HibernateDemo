@@ -22,10 +22,10 @@ public class HibernateDemo {
 
         Vehicle vehicle1 = new Vehicle();
         vehicle1.setVehicleName("Jaguar");
-//        Vehicle vehicle2 = new Vehicle();
-//        vehicle2.setVehicleName("Cabriolet");
-//        user.getVehicles().add(vehicle1);
-//        user.getVehicles().add(vehicle2);
+        /*Vehicle vehicle2 = new Vehicle();
+        vehicle2.setVehicleName("Cabriolet");
+        user.getVehicles().add(vehicle1);
+        user.getVehicles().add(vehicle2);*/
 
         TwoWheeler bike = new TwoWheeler();
         bike.setVehicleName("Bike");

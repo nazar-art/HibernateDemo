@@ -1,12 +1,11 @@
 package com.demo.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
+//@DiscriminatorValue("Bike")
 public class TwoWheeler extends Vehicle {
-
-    @Column(length = 35)
+//    @Column(length = 35)
     private String steeringHandler;
 
     public String getSteeringHandler() {

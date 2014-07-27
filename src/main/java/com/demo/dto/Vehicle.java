@@ -3,10 +3,11 @@ package com.demo.dto;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "VEHICLE")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name = "VEHICLE_TYPE", discriminatorType = DiscriminatorType.STRING)
 public class Vehicle {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.TABLE)
     private int vehicleId;
 
     @Column(name = "name", length = 35)
@@ -15,7 +16,6 @@ public class Vehicle {
     /*@ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     private UserDetails user;
-
     @ManyToOne
     private Collection<UserDetails> userDetailses = new ArrayList<UserDetails>();*/
 
