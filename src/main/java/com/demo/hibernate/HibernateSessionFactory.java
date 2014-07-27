@@ -34,7 +34,7 @@ public class HibernateSessionFactory {
      * @throws HibernateException
      */
     public static Session currentSession() throws HibernateException {
-        Session session = (Session) threadLocal.get();
+        Session session = threadLocal.get();
 
         if (session == null) {
             if (sessionFactory == null) {
@@ -45,8 +45,7 @@ public class HibernateSessionFactory {
                     cfg.configure(CONFIG_FILE_LOCATION);
                     sessionFactory = cfg.buildSessionFactory();
                 } catch (Exception e) {
-                    System.err
-                            .println("%%%% Error Creating SessionFactory %%%%");
+                    System.err.println("%%%% Error Creating SessionFactory %%%%");
                     e.printStackTrace();
                 }
             }
@@ -62,7 +61,7 @@ public class HibernateSessionFactory {
      * @throws HibernateException
      */
     public static void closeSession() throws HibernateException {
-        Session session = (Session) threadLocal.get();
+        Session session = threadLocal.get();
         threadLocal.set(null);
 
         if (session != null) {

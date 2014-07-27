@@ -1,6 +1,7 @@
 package com.demo.hibernate;
 
 import com.demo.dto.UserDetails;
+import com.demo.dto.Vehicle;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -17,12 +18,22 @@ public class HibernateDemo {
         user.setJoinedDate(new Date());
         user.setDescription("it is cool guy");
 
+        Vehicle vehicle1 = new Vehicle();
+        vehicle1.setVehicleName("Jaguar");
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setVehicleName("Cabriolet");
+        // set vehicles
+        user.getVehicles().add(vehicle1);
+        user.getVehicles().add(vehicle2);
+
         demo.createUser(user);
+        System.out.println("USERS BEFORE UPDATE:");
         demo.listUsers();
         user.setUserName("Bruno Shults");
         user.setAddress("Germany");
         demo.updateUser(user);
 
+        System.out.println("USERS AFTER UPDATE:");
         demo.listUsers();
     }
 

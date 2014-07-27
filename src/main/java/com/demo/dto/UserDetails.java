@@ -1,6 +1,8 @@
 package com.demo.dto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -23,6 +25,10 @@ public class UserDetails {
 
     @Column(length = 35)
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @Column(name = "VEHICLES")
+    private Collection<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     public Date getJoinedDate() {
         return joinedDate;
@@ -62,5 +68,13 @@ public class UserDetails {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Collection<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Collection<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }
