@@ -1,5 +1,7 @@
 package com.demo.hibernate;
 
+import com.demo.dto.FourWheeler;
+import com.demo.dto.TwoWheeler;
 import com.demo.dto.UserDetails;
 import com.demo.dto.Vehicle;
 import org.hibernate.Session;
@@ -20,13 +22,20 @@ public class HibernateDemo {
 
         Vehicle vehicle1 = new Vehicle();
         vehicle1.setVehicleName("Jaguar");
-        Vehicle vehicle2 = new Vehicle();
-        vehicle2.setVehicleName("Cabriolet");
-        // set vehicles
-        user.getVehicles().add(vehicle1);
-        user.getVehicles().add(vehicle2);
+//        Vehicle vehicle2 = new Vehicle();
+//        vehicle2.setVehicleName("Cabriolet");
+//        user.getVehicles().add(vehicle1);
+//        user.getVehicles().add(vehicle2);
 
-        demo.createUser(user);
+        TwoWheeler bike = new TwoWheeler();
+        bike.setVehicleName("Bike");
+        bike.setSteeringHandler("bike steering handler");
+
+        FourWheeler car = new FourWheeler();
+        car.setVehicleName("Car");
+        car.setSteeringWheel("car steering wheel");
+
+        demo.createUser(user, vehicle1, bike, car);
         System.out.println("USERS BEFORE UPDATE:");
         demo.listUsers();
         user.setUserName("Bruno Shults");
@@ -35,14 +44,20 @@ public class HibernateDemo {
 
         System.out.println("USERS AFTER UPDATE:");
         demo.listUsers();
+
+        System.exit(1);
     }
 
-    private UserDetails createUser(UserDetails userDetails) {
+    private UserDetails createUser(UserDetails userDetails, Vehicle ... vehicles) {
         Session session = HibernateSessionFactory.currentSession();
         Transaction tx = session.beginTransaction();
 
         Integer id = (Integer) session.save(userDetails);
         userDetails.setUserId(id);
+
+        for (Vehicle vehicle : vehicles) {
+            session.save(vehicle);
+        }
 
         tx.commit();
         HibernateSessionFactory.closeSession();
