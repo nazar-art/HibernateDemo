@@ -85,7 +85,10 @@ public class HibernateDemo {
 
         @SuppressWarnings("unchecked") // from Users table we able to take only users
         List<UserDetails> users = session.createQuery("from UserDetails").list();
-
+//        Query query = session.createQuery("from UserDetails");
+//        query.setFirstResult(5);
+//        query.setMaxResults(4);
+        /*from UserDetails where userId > 5*/
         for (UserDetails user : users) {
             System.out.printf("ID: %d NAME: %s%n", user.getUserId(), user.getUserName());
         }
