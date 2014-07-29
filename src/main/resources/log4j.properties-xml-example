@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="OFF" packages="com.epam.kztc.cits.auto.core.logger">
+    <properties>
+        <property name="filename">logs/kztc-cits.log</property>
+        <property name="filepattern">logs/$${date:yyyy-MM}/kztc-cits-test-%d{MM-dd-yyyy}-%i.log.gz
+        </property>
+        <property name="layotpattern">%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</property>
+        <property name="filesize">5 MB</property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layotpattern}"/>
+        </Console>
+        <RollingFile name="KztcCitsFile" fileName="${filename}" filePattern="${filepattern}">
+            <PatternLayout pattern="${layotpattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${filesize}"/>
+            </Policies>
+        </RollingFile>
+        <TestNgAppender name="KztcCitsTestNgReportAppender">
+            <PatternLayout pattern="${layotpattern}"/>
+        </TestNgAppender>
+        <ReportPortalAppender name="KztcCitsReportPortalAppender">
+            <PatternLayout pattern="${layotpattern}"/>
+        </ReportPortalAppender>
+    </appenders>
+    <loggers>
+        <root level="warn">
+            <appender-ref ref="Console"/>
+        </root>
+        <logger name="KztcCitsLogger" level="debug" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="KztcCitsFile"/>
+            <appender-ref ref="KztcCitsTestNgReportAppender"/>
+            <appender-ref ref="KztcCitsReportPortalAppender"/>
+        </logger>
+    </loggers>
+</configuration>

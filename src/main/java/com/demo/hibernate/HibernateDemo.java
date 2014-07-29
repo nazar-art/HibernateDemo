@@ -4,8 +4,13 @@ import com.demo.dto.FourWheeler;
 import com.demo.dto.TwoWheeler;
 import com.demo.dto.UserDetails;
 import com.demo.dto.Vehicle;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.Date;
 import java.util.List;
@@ -83,12 +88,33 @@ public class HibernateDemo {
         Session session = HibernateSessionFactory.currentSession();
         Transaction tx = session.beginTransaction();
 
+        UserDetails exampleUser = new UserDetails();
+        exampleUser.setUserId(5);
+        exampleUser.setUserName("User 5%");
+
+        Example example = Example.create(exampleUser).excludeProperty("userName").enableLike();
+
+        Criteria criteria = session.createCriteria(UserDetails.class)
+                .setProjection(Projections.property("userId"))
+                .addOrder(Order.desc("userId"))
+                .add(example);
+        criteria.add(Restrictions.eq("userName", "Bruno Shults"));
+        @SuppressWarnings("unchecked")
+        List<UserDetails> userDetailses = criteria.list();
+
         @SuppressWarnings("unchecked") // from Users table we able to take only users
         List<UserDetails> users = session.createQuery("from UserDetails").list();
-//        Query query = session.createQuery("from UserDetails");
-//        query.setFirstResult(5);
-//        query.setMaxResults(4);
+        /*String minUseId = "5";
+        Query query = session.createQuery("from UserDetails where userId > :userId");
+        Query query = session.getNamedQuery("UserDetails.byId");
+        query.setInteger(0, 2);
+        Query query1 = session.getNamedQuery("UserDetails.byName");
+        query.setString(0, "Karl");
+        query.setInteger("userId", Integer.valueOf(minUseId));
+        query.setFirstResult(5);
+        query.setMaxResults(4);*/
         /*from UserDetails where userId > 5*/
+
         for (UserDetails user : users) {
             System.out.printf("ID: %d NAME: %s%n", user.getUserId(), user.getUserName());
         }
