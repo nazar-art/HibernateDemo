@@ -8,6 +8,7 @@ import java.util.Date;
 @Entity
 @Table(name = "USERS")
 //@org.hibernate.annotations.Entity(selectBeforeUpdate = true)
+@Cacheable
 @NamedQuery(name = "UserDetails.byId", query = "from UserDetails where userId = ?")
 @NamedNativeQuery(name = "UserDetails.byName", query = "select * from users where name = ?")
 public class UserDetails {

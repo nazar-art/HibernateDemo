@@ -18,7 +18,12 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!--Disable the second level cache-->
-        <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
+        <!--<property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>-->
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="cache.use_second_level_cache">true</property>
+        <property name="cache.use_query_cache">true</property>
+        <property name="cache.provider_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</property>
 
         <!--Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
